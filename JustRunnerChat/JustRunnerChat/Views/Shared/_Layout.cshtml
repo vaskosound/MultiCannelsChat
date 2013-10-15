@@ -8,9 +8,9 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/jquery-ui.css" rel="stylesheet" />
     @*<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />*@
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-   <script src="~/Scripts/pubnub.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="~/Scripts/pubnub.min.js"></script>
 </head>
 <body>
     <header>
@@ -26,20 +26,20 @@
                         <!--<li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>-->
                         <li><a href="#" id="go-register">Register</a></li>
                         <li><a href="#" id="go-login">Login</a></li>
-                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                        @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>*@
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
-    
-    
+
+
     @RenderBody()
 
-    
+
     @RenderSection("scripts", required: false)
-@*    @Scripts.Render("~/Scripts/js")*@
-     
+    @*    @Scripts.Render("~/Scripts/js")*@
+
     <script src="../../Scripts/class.js"></script>
     <script src="../../Scripts/q.js"></script>
     <script src="../../Scripts/sha1.js"></script>

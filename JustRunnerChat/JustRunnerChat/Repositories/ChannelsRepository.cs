@@ -112,7 +112,7 @@ namespace JustRunnerChat.Repositories
         {
             ValidateChannelName(channelName);
             ValidateNickname(userNickname);
-            using (ChatContext context = new ChatContext())
+            using (var context = new ChatContext())
             {
                 var nameToLower = channelName.ToLower();
 
@@ -123,6 +123,7 @@ namespace JustRunnerChat.Repositories
 
                 if (dbChannel.Users.Count == 0)
                 {
+                    context.Messages.RemoveRange(dbChannel.History);
                     context.Channels.Remove(dbChannel);
                 }
 
@@ -181,10 +182,11 @@ namespace JustRunnerChat.Repositories
         {
             using (ChatContext context = new ChatContext())
             {
-                var channels = context.Channels.Select(new Func<Channel, ChannelModel>(x => new ChannelModel()
+                var channels = context.Channels.Select(x => new ChannelModel()
                 {
-                    Name = x.Name
-                })).ToList();
+                    Name = x.Name,
+                    Users = x.Users.Select(u => u.Nickname)
+                }).ToList();
 
                 return channels;
             }

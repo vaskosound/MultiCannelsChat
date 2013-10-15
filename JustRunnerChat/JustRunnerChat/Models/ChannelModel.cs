@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -27,6 +28,9 @@ namespace JustRunnerChat.Models
     {
         [DataMember(Name = "name")]
         public string Name { get; set; }
+
+        [DataMember(Name = "users")]
+        public IEnumerable<string> Users { get; set; }
     }
 
     [DataContract]

@@ -23,6 +23,7 @@ Chat.controller = (function () {
 
             this.atachUIHandlers("body");
             this.getChannels();
+            this.loadJoinedChatsTabs();
         },
 
         loadLogin: function (selector) {
@@ -34,10 +35,9 @@ Chat.controller = (function () {
         },
 
         loadChat: function (selector) {
-            var nickname = this.persister.getNickname();
             $(selector).load("../PartialViews/chat.html");
 
-            $("#menu").prepend('<li><span>Hello, ' + nickname + '</span><a href="#" id="logout-button">Logout</a></li>');
+            $("#menu").prepend('<li><span>Hello, ' + this.persister.getNickname() + '</span><a href="#" id="logout-button">Logout</a></li>');
             $("#go-register").parent().attr("style", "display:none");
             $("#go-login").parent().attr("style", "display:none");
         },
@@ -46,14 +46,17 @@ Chat.controller = (function () {
             var wrapper = $(selector);
             var self = this;
 
+            // load login form
             wrapper.on("click", "#go-login", function () {
                 self.loadLogin(self.selector);
             });
 
+            // load register form
             wrapper.on("click", "#go-register", function () {
                 self.loadRegister(self.selector);
             });
 
+            // login
             wrapper.on("click", "#login-button", function () {
                 var username = $(selector + " #login-username").val();
                 var password = $(selector + " #login-password").val();
@@ -61,6 +64,7 @@ Chat.controller = (function () {
                 self.persister.user.login(username, password)
                     .then(function (data) {
                         self.loadChat(self.selector);
+                        self.loadJoinedChatsTabs();
                     }, function (err) {
                         $("#login-reg-errors").html(err.responseJSON.Message);
                     });
@@ -68,6 +72,7 @@ Chat.controller = (function () {
                 return false;
             });
 
+            // register user
             wrapper.on("click", "#register-button", function () {
                 var username = $(selector + " #reg-username").val();
                 var nickname = $(selector + " #reg-nickname").val();
@@ -75,7 +80,6 @@ Chat.controller = (function () {
 
                 self.persister.user.register(username, nickname, password)
                     .then(function () {
-                        console.log("Register success!");
                         self.loadChat(self.selector);
                     }, function (err) {
                         console.log(err);
@@ -84,6 +88,7 @@ Chat.controller = (function () {
                 return false;
             });
 
+            // logout
             wrapper.on("click", "#logout-button", function () {
                 self.persister.user.logout()
                     .then(function () {
@@ -96,6 +101,7 @@ Chat.controller = (function () {
                 return false;
             });
 
+            // create chat
             var count = 0;
             wrapper.on("click", "#add_tab", function () {
                 var addButton = $(".ui-dialog-buttonset").children().first();
@@ -114,10 +120,10 @@ Chat.controller = (function () {
                         return false;
                     });
                 }
-
                 return false;
             });
 
+            // join chat
             wrapper.on("click", "#update-area li a", function (parameters) {
                 var name = $(this).text();
                 self.persister.channels.join(name, "")
@@ -129,6 +135,7 @@ Chat.controller = (function () {
 
             });
 
+            // load users in chatroom
             wrapper.on("click", "#tabs li a", function (ev) {
                 $("#tabs li").attr("channel-selected", false);
                 var channelName = $(this).text();
@@ -144,25 +151,10 @@ Chat.controller = (function () {
                     });
             });
 
+            // send message
             wrapper.on("click", "#chat-button", function () {
                 var message = $("#chat-input").val();
-                var boxes = $("#tabs ul li");
-                var channelName;
-                for (var i = 0; i < boxes.length; i++) {
-                    if (boxes[i].getAttribute("channel-selected") == "true") {
-                        channelName = boxes[i].children[0].innerHTML;
-                    }
-                }
-                self.persister.channels.sendMessage(channelName, self.persister.getNickname() + ": " + message).then(function () {
-                        $("#chat-input").val("");
-                    });
-
-                return false;
-            });
-
-            wrapper.on("keyup", function (e) {
-                if ((e.keyCode || e.charCode) === 13) {
-                    var message = $("#chat-input").val();
+                if (message != null && message != "") {
                     var boxes = $("#tabs ul li");
                     var channelName;
                     for (var i = 0; i < boxes.length; i++) {
@@ -170,11 +162,32 @@ Chat.controller = (function () {
                             channelName = boxes[i].children[0].innerHTML;
                         }
                     }
-                    self.persister.channels.sendMessage(channelName, self.persister.getNickname() + ": " + message)
-                    .then(function () {
+                    self.persister.channels.sendMessage(channelName, self.persister.getNickname() + ": " + message).then(function () {
                         $("#chat-input").val("");
                     });
+
                     return false;
+                }
+            });
+
+            //send message with press Enter
+            wrapper.on("keyup", function (e) {
+                if ((e.keyCode || e.charCode) === 13) {
+                    var message = $("#chat-input").val();
+                    if (message != null && message != "") {
+                        var boxes = $("#tabs ul li");
+                        var channelName;
+                        for (var i = 0; i < boxes.length; i++) {
+                            if (boxes[i].getAttribute("channel-selected") == "true") {
+                                channelName = boxes[i].children[0].innerHTML;
+                            }
+                        }
+                        self.persister.channels.sendMessage(channelName, self.persister.getNickname() + ": " + message)
+                        .then(function () {
+                            $("#chat-input").val("");
+                        });
+                        return false;
+                    }
                 }
 
             });
@@ -182,13 +195,12 @@ Chat.controller = (function () {
 
             // Exit channel
             wrapper.on("click", "#tabs ul li span", function (parameters) {
+                var boxId = $(this).parent('li').attr("aria-controls");
+                $("#" + boxId).remove();
                 var name = $(this).prev().text();
-                //var div = $(this).pa
-                //alert(name);
                 self.persister.channels.exitChannel(name)
                     .then(function (data) {
                         self.unloadChatBox(name);
-                        self.tabCounter--;
                     });
                 return false;
             });
@@ -207,8 +219,7 @@ Chat.controller = (function () {
                 tabContentHtml = tabContent.val() || "Tab " + this.tabCounter + " content.";
 
             tabs.find(".ui-tabs-nav").append(li);
-            tabs.append("<div id='" + id + "'</div>");
-            //$("#update-area ul").append("<li><a href='#'>" + tabTitle.val() + "</a></li>");
+            tabs.append("<div id='" + id + "'></div>");
             tabs.tabs("refresh");
             this.tabCounter++;
 
@@ -229,12 +240,30 @@ Chat.controller = (function () {
             }, 1000);
         },
 
+        loadJoinedChatsTabs: function () {
+            var self = this;
+            this.persister.channels.getAll()
+                .then(function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var users = data[i].users;
+                        for (var j = 0; j < users.length; j++) {
+                            if (users[j] == self.persister.getNickname()) {
+                                self.addTab(data[i].name);
+                                var containerId = self.findChatBoxId();
+                                self.loadChatBox(data[i].name, containerId);
+                                break;
+                            }
+                        }
+                    }
+                });
+        },
+
         loadChatBox: function (channelName, id) {
             var pubnub = PUBNUB.init({
                 publish_key: 'pub-c-5093de55-5a92-4b74-9522-d10c4c129dcc',
                 subscribe_key: 'sub-c-20837058-05f4-11e3-991c-02ee2ddab7fe',
             });
-            var input = pubnub.$('chat-input');
+
             pubnub.subscribe({
                 channel: channelName,
                 callback: function (message) {
@@ -259,7 +288,7 @@ Chat.controller = (function () {
             var id = "";
             for (var i = 0; i < list.length; i++) {
                 if (list[i].getAttribute("channel-selected") == "true") {
-                    id = "tabs-" + (i + 1);
+                    id = list[i].getAttribute("aria-controls");
                 }
             }
 

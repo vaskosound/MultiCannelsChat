@@ -1,5 +1,5 @@
 ﻿<div id="chat">
-    
+
     <!-- Users -->
 
     <div class="section section-users">
@@ -13,8 +13,7 @@
             <!-- List of People -->
             <div id="list-of-people">
                 <div>
-                    <ul>
-                    </ul>
+                    <ul></ul>
                 </div>
             </div>
         </div>
@@ -33,7 +32,7 @@
             <div class="chat-box-area-inset">
                 <div class="relative">
                     <div id="pubnub" pub-key=pub-c-5093de55-5a92-4b74-9522-d10c4c129dcc sub-key=sub-c-20837058-05f4-11e3-991c-02ee2ddab7fe
-                        ssl="off" origin="pubsub.pubnub.com" ></div>
+                         ssl="off" origin="pubsub.pubnub.com"></div>
                     <input id="chat-input" class="chat-box-input" placeholder="chat">
                     <button id="chat-button" class="chat-box-button">Send</button>
                 </div>
@@ -41,7 +40,7 @@
         </div>
         <script src="../Scripts/pubnub.min.js"></script>
         <script src="http://cdn.pubnub.com/pubnub-3.5.3.min.js"></script>
-        
+
         <!-- Chat Content Area -->
         <script>
             $(function () {
@@ -58,7 +57,6 @@
                     modal: true,
                     buttons: {
                         Add: function () {
-                           // addTab();
                             $(this).dialog("close");
                         },
                         Cancel: function () {
@@ -73,7 +71,6 @@
                 // addTab form: calls addTab function on submit and closes the dialog
                 var form = dialog.find("form").submit(function (event) {
                     addTab();
-                    
                     dialog.dialog("close");
                     event.preventDefault();
                 });
@@ -86,7 +83,7 @@
                         selected = "channel-selected=true",
                        li = $(tabTemplate.replace(/#\{href\}/g, "#" + id).replace(/#\{label\}/g, label).replace(/#\{selected\}/g, selected)),
                         tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
-
+                    
                     tabs.find(".ui-tabs-nav").append(li);
                     tabs.append("<div id='" + id + "'</div>");
                     $("#update-area ul").append("<li><a href='#'>" + tabTitle.val() + "</a></li>");
@@ -140,11 +137,9 @@
 
 
         <div id="tabs">
-             <ul>
-                
-            </ul>
+            <ul></ul>
         </div>
-       
+
     </div>
 
     <!-- Channels -->
@@ -153,15 +148,14 @@
             <div class="circle-header circle-header-one"></div>
             <div class="circle-header-text">Channels</div>
             <div class="circle-header-icon circle-header-icon-one"></div>
-            
-            <button type="button" id="add_tab" >Create Channel</button>
+
+            <button type="button" id="add_tab">Create Channel</button>
             <!--<div class="time" id="time">01:00<sup>pm</sup></div>-->
             <div class="time-line"></div>
 
             <div id="update-area" class="update-area">
                 <div>
-                    <ul>
-                    </ul>
+                    <ul></ul>
                 </div>
             </div>
         </div>

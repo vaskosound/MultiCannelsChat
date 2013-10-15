@@ -104,15 +104,15 @@ h5, h6 {
     padding-bottom: 35px;
 }
 
-    .main-content {
-        background: url("../Images/accent.png") no-repeat;
-        padding-left: 10px;
-        padding-top: 10px;
-    }
+.main-content {
+    background: url("../Images/accent.png") no-repeat;
+    padding-left: 10px;
+    padding-top: 10px;
+}
 
-    .featured + .main-content {
-        background: url("../Images/heroAccent.png") no-repeat;
-    }
+.featured + .main-content {
+    background: url("../Images/heroAccent.png") no-repeat;
+}
 
 header .content-wrapper {
     padding-top: 10px;
@@ -140,12 +140,12 @@ footer {
     margin: 0;
 }
 
-.site-title a, .site-title a:hover, .site-title a:active {
-    background: none;
-    color: #c8c8c8;
-    outline: none;
-    text-decoration: none;
-}
+    .site-title a, .site-title a:hover, .site-title a:active {
+        background: none;
+        color: #c8c8c8;
+        outline: none;
+        text-decoration: none;
+    }
 
 
 /* login
@@ -165,12 +165,12 @@ footer {
         text-decoration: none;
     }
 
-    #login a.username {
-        background: none;
-        margin: 0;
-        padding: 0;
-        text-decoration: underline;
-    }
+        #login a.username {
+            background: none;
+            margin: 0;
+            padding: 0;
+            text-decoration: underline;
+        }
 
     #login ul {
         margin: 0;
@@ -209,10 +209,10 @@ ul#menu {
             text-decoration: none;
         }
 
-        ul#menu li a:hover {
-            color: #333;
-            text-decoration: none;
-        }
+            ul#menu li a:hover {
+                color: #333;
+                text-decoration: none;
+            }
 
 
 /* page elements
@@ -233,27 +233,27 @@ ul#menu {
         padding: 10px;
     }
 
-        .featured hgroup.title h1, .featured hgroup.title h2 {
-            color: #fff;
-        }
+    .featured hgroup.title h1, .featured hgroup.title h2 {
+        color: #fff;
+    }
 
-        .featured p {
-            font-size: 1.1em;
-        }
+    .featured p {
+        font-size: 1.1em;
+    }
 
 /* page titles */
 hgroup.title {
     margin-bottom: 10px;
 }
 
-hgroup.title h1, hgroup.title h2 {
-    display: inline;
-}
+    hgroup.title h1, hgroup.title h2 {
+        display: inline;
+    }
 
-hgroup.title h2 {
-    font-weight: normal;
-    margin-left: 3px;
-}
+    hgroup.title h2 {
+        font-weight: normal;
+        margin-left: 3px;
+    }
 
 /* features */
 section.feature {
@@ -365,12 +365,12 @@ aside {
         width: 250px;
     }
 
-    #loginForm input[type="checkbox"],
-    #loginForm input[type="submit"],
-    #loginForm input[type="button"],
-    #loginForm button {
-        width: auto;
-    }
+        #loginForm input[type="checkbox"],
+        #loginForm input[type="submit"],
+        #loginForm input[type="button"],
+        #loginForm button {
+            width: auto;
+        }
 
 #socialLoginForm {
     margin-left: 40px;
@@ -379,7 +379,7 @@ aside {
 }
 
     #socialLoginForm h2 {
-        margin-bottom:  5px;
+        margin-bottom: 5px;
     }
 
 #socialLoginList button {
@@ -388,20 +388,6 @@ aside {
 
 #logoutForm {
     display: inline;
-}
-
-/* contact */
-.contact h3 {
-    font-size: 1.2em;
-}
-
-.contact p {
-    margin: 5px 0 0 10px;
-}
-
-.contact iframe {
-    border: 1px solid #333;
-    margin: 5px 0 0 10px;
 }
 
 /* forms */
@@ -430,9 +416,9 @@ label {
     font-weight: 600;
 }
 
-label.checkbox {
-    display: inline;
-}
+    label.checkbox {
+        display: inline;
+    }
 
 input, textarea {
     border: 1px solid #e2e2e2;
@@ -453,32 +439,32 @@ textarea {
         border: 1px solid #7ac0da;
     }
 
-    input[type="checkbox"] {
-        background: transparent;
-        border: inherit;
-        width: auto;
-    }
+input[type="checkbox"] {
+    background: transparent;
+    border: inherit;
+    width: auto;
+}
 
-    input[type="submit"],
-    input[type="button"],
-    button {
-        background-color: #d3dce0;
-        border: 1px solid #787878;
-        cursor: pointer;
-        font-size: 1.2em;
-        font-weight: 600;
-        padding: 7px;
-        margin-right: 8px;
-        width: auto;
-    }
+input[type="submit"],
+input[type="button"],
+button {
+    background-color: #d3dce0;
+    border: 1px solid #787878;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 7px;
+    margin-right: 8px;
+    width: auto;
+}
 
-    td input[type="submit"],
-    td input[type="button"],
-    td button {
-        font-size: 1em;
-        padding: 4px;
-        margin-right: 4px;
-    }
+td input[type="submit"],
+td input[type="button"],
+td button {
+    font-size: 1em;
+    padding: 4px;
+    margin-right: 4px;
+}
 
 /* info and errors */
 .message-info {
@@ -535,68 +521,6 @@ input[type="checkbox"].input-validation-error {
 }
 
 
-/* tables
-----------------------------------------------------------*/
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin-top: 0.75em;
-    border: 0 none;
-}
-
-th {
-    font-size: 1.2em;
-    text-align: left;
-    border: none 0px;
-    padding-left: 0;
-}
-
-    th a {
-        display: block;
-        position: relative;
-    }
-
-    th a:link, th a:visited, th a:active, th a:hover {
-        color: #333;
-        font-weight: 600;
-        text-decoration: none;
-        padding: 0;
-    }
-
-    th a:hover {
-        color: #000;
-    }
-
-    th.asc a, th.desc a {
-        margin-right: .75em;
-    }
-
-    th.asc a:after, th.desc a:after {
-        display: block;
-        position: absolute;
-        right: 0em;
-        top: 0;
-        font-size: 0.75em;
-    }
-
-    th.asc a:after {
-        content: '▲';
-    }
-
-    th.desc a:after {
-        content: '▼';
-    }
-
-td {
-    padding: 0.25em 2em 0.25em 0em;
-    border: 0 none;
-}
-
-tr.pager td {
-    padding: 0 0.25em 0 0;
-}
-
-
 /********************
 *   Mobile Styles   *
 ********************/
@@ -642,9 +566,9 @@ tr.pager td {
             padding: 0;
         }
 
-        #login a:hover {
-            color: #333;
-        }
+            #login a:hover {
+                color: #333;
+            }
 
     /* menu */
     nav {
@@ -709,12 +633,12 @@ tr.pager td {
                 background: none;
             }
 
-     /* features */
-     section.feature {
+    /* features */
+    section.feature {
         float: none;
         padding: 10px;
         width: auto;
-     }
+    }
 
         section.feature img {
             color: #999;
@@ -771,21 +695,18 @@ tr.pager td {
     margin: 0;
     border: 0;
     padding: 0;
-
     position: relative;
     overflow: hidden;
-
     width: 1024px;
     height: 768px;
-
     background: #fefef2 url(chat-bg.jpg) no-repeat;
-
     color: #ffe;
     font-size: 15px;
     font-family: "Open Sans";
     font-weight: 400;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
 }
+
 .circle-header, .circle-header-icon {
     display: inline-block;
     overflow: hidden;
@@ -797,19 +718,31 @@ tr.pager td {
     height: 31px;
 }
 
-.circle-header-one   { background: #f0f }
-.circle-header-two   { background: #f90 }
-.circle-header-three { background: #0ff }
+.circle-header-one {
+    background: #f0f;
+}
 
-.circle-header-icon       { }
-.circle-header-icon-one   {
-    background: transparent url(flag-icon.png) no-repeat 6px 6px
+.circle-header-two {
+    background: #f90;
 }
-.circle-header-icon-two   {
-    background: transparent url(users-icon.png) no-repeat 5px 5px
+
+.circle-header-three {
+    background: #0ff;
 }
-.circle-header-icon-three {     
-    background: transparent url(chat-icon.png) no-repeat 6px 6px
+
+.circle-header-icon {
+}
+
+.circle-header-icon-one {
+    background: transparent url(flag-icon.png) no-repeat 6px 6px;
+}
+
+.circle-header-icon-two {
+    background: transparent url(users-icon.png) no-repeat 5px 5px;
+}
+
+.circle-header-icon-three {
+    background: transparent url(chat-icon.png) no-repeat 6px 6px;
 }
 
 .circle-header-text {
@@ -822,8 +755,8 @@ tr.pager td {
     text-decoration: none;
     text-transform: uppercase;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-
 }
+
 .section {
     position: absolute;
     overflow: hidden;
@@ -832,22 +765,25 @@ tr.pager td {
     width: 347px;
     height: 406px;
 }
+
 .section-channels {
     left: 880px;
     width: 300px;
     height: 768px;
 }
+
 .section-users {
-    //top: 407px;
     left: 130px;
     width: 200px;
     height: 768px;
 }
+
 .section-chatbox {
     left: 310px;
     width: 555px;
     height: 768px;
 }
+
 .time {
     position: absolute;
     top: 52px;
@@ -859,7 +795,11 @@ tr.pager td {
     text-transform: uppercase;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 }
-.time sup { font-size: 37px }
+
+    .time sup {
+        font-size: 37px;
+    }
+
 .time-line {
     position: absolute;
     top: 166px;
@@ -876,6 +816,7 @@ tr.pager td {
     margin: 10px 0;
     font-size: 14px;
 }
+
 .update-time,
 .chat-box-message-time {
     display: inline-block;
@@ -883,11 +824,13 @@ tr.pager td {
     font-weight: 700;
     font-size: 16px;
 }
-.update-time sup,
-.chat-box-message-time sup {
-    font-size: 10px;
-    font-weight: 400;
-}
+
+    .update-time sup,
+    .chat-box-message-time sup {
+        font-size: 10px;
+        font-weight: 400;
+    }
+
 .update-line {
     font-size: 0px;
     line-height: 0px;
@@ -906,10 +849,12 @@ tr.pager td {
     width: 300px;
     height: 300px;
 }
+
 .person {
     height: 52px;
     width: 300px;
 }
+
 .person-line {
     position: absolute;
     top: 0px;
@@ -918,6 +863,7 @@ tr.pager td {
     width: 2px;
     background: rgba(255,255,255,0.5);
 }
+
 .person-name {
     position: absolute;
     top: 24px;
@@ -925,7 +871,8 @@ tr.pager td {
     height: 20px;
     width: 300px;
 }
-.person-picture, 
+
+.person-picture,
 #chat-box-user-icon {
     position: absolute;
     overflow: hidden;
@@ -941,13 +888,13 @@ tr.pager td {
     background-size: cover;
     width: 30px;
     height: 30px;
-
     -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
     -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
     -ms-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
     -o-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
     box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
 }
+
 .person-offline {
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
@@ -963,21 +910,18 @@ tr.pager td {
     overflow: hidden;
     top: 100px;
     left: 20px;
-
     background: rgba(0,0,0,0.4);
-
     width: 525px;
     height: 42px;
-
     border: 2px solid rgba(255,255,255,0.4);
     border-radius: 12px;
-
     -webkit-box-shadow: 1px 8px 20px 2px rgba(0,0,0,0.1);
     -moz-box-shadow: 1px 8px 20px 2px rgba(0,0,0,0.1);
     -ms-box-shadow: 1px 8px 20px 2px rgba(0,0,0,0.1);
     -o-box-shadow: 1px 8px 20px 2px rgba(0,0,0,0.1);
     box-shadow: 1px 8px 20px 2px rgba(0,0,0,0.1);
 }
+
 .chat-box-area-inset {
     top: 0;
     left: 0;
@@ -989,21 +933,20 @@ tr.pager td {
     -o-box-shadow: inset 1px 8px 20px 2px rgba(0,0,0,0.8);
     box-shadow: inset 1px 8px 20px 2px rgba(0,0,0,0.8);
 }
+
 .chat-box-input {
     outline: 0;
     position: absolute;
     left: 10px;
-
     text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-
     background: transparent;
     border: 0;
-
     width: 340px;
     height: 20px;
     font-size: 18px;
     color: #fefef2;
 }
+
 .chat-box-button {
     cursor: pointer;
     outline: 0;
@@ -1022,12 +965,14 @@ tr.pager td {
     text-align: left;
     padding-left: 40px;
 }
-.chat-box-button:hover {
-    background-color: rgba(100,255,255,0.9)
-}
-.chat-box-button:active {
-    background-color: rgba(255,200,200,0.9)
-}
+
+    .chat-box-button:hover {
+        background-color: rgba(100,255,255,0.9);
+    }
+
+    .chat-box-button:active {
+        background-color: rgba(255,200,200,0.9);
+    }
 
 #chat-box-user-icon {
     border: 0;
@@ -1043,15 +988,16 @@ tr.pager td {
     overflow: hidden;
     top: 200px;
     left: 20px;
-
     width: 470px;
     height: 568px;
 }
+
 .chat-box-person {
     width: 470px;
     padding-bottom: 6px;
     margin-bottom: 6px;
 }
+
 .chat-box-person-line {
     font-size: 0px;
     line-height: 0px;
@@ -1067,11 +1013,13 @@ tr.pager td {
     font-weight: 500;
     width: 440px;
 }
+
 .chat-box-message-name {
     float: left;
     width: 130px;
     font-weight: 700;
 }
+
 .chat-box-message-time {
     position: absolute;
     top: 2px;
@@ -1080,8 +1028,13 @@ tr.pager td {
 }
 
 /* UTILITY */
-.relative { position: relative }
-.clear { clear: both }
+.relative {
+    position: relative;
+}
+
+.clear {
+    clear: both;
+}
 
 /* FOOTER AREA */
 #footer-area {
@@ -1092,11 +1045,13 @@ tr.pager td {
     height: 100px;
     background: url(chat-bg-bottom.png);
 }
+
 .pubnub-logo {
     background: url(pubnub-logo.png);
     width: 116px;
     height: 26px;
 }
+
 .pubnub-logo-top,
 .pubnub-logo-bottom {
     position: absolute;
@@ -1107,6 +1062,7 @@ tr.pager td {
     text-align: right;
     opacity: 0.9;
 }
+
 .pubnub-logo-bottom {
     top: 56px;
     opacity: 0.2;
@@ -1118,29 +1074,56 @@ tr.pager td {
 }
 
 #tabs {
-top: 150px;
-left: 20px;
-width: 525px;
-position: absolute;
-min-height: 600px;
+    top: 150px;
+    left: 20px;
+    width: 525px;
+    min-height: 500px;
+    position: absolute;
+    overflow: hidden;
 }
 
 /* JQuery css*/
- #dialog label, #dialog input { display:block; }
-  #dialog label { margin-top: 0.5em; }
-  #dialog input, #dialog textarea { width: 95%; }
-  #tabs { margin-top: 1em; }
-  #tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
-  #add_tab { cursor: pointer; position: absolute;
-top: 60px;
-left: 22px;}
-
-  .ui-widget-content {
-border: none;
+#dialog label, #dialog input {
+    display: block;
 }
 
-  .box {
-min-height: 30px;
+#dialog label {
+    margin-top: 0.5em;
+}
+
+#dialog input, #dialog textarea {
+    width: 95%;
+}
+
+#tabs {
+    margin-top: 1em;
+}
+
+    #tabs li .ui-icon-close {
+        float: left;
+        margin: 0.4em 0.2em 0 0;
+        cursor: pointer;
+    }
+
+.ui-tabs-panel {
+    overflow-y: scroll;
+    word-break: break-all;
+    height: 450px;
+}
+
+#add_tab {
+    cursor: pointer;
+    position: absolute;
+    top: 60px;
+    left: 22px;
+}
+
+.ui-widget-content {
+    border: none;
+}
+
+.box {
+    min-height: 30px;
 }
 
 label[for="channel-name"] {

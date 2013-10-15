@@ -69,7 +69,10 @@ namespace JustRunnerChat.Controllers
                 ChannelsRepository.AddMessage(channelModel.Name, channelModel.Nickname, message);
             });
 
-            pubnub.Publish(channelModel.Name, channelModel.Message);
+            string currentTimeAsString = DateTime.Now.TimeOfDay.ToString();
+            int endTimeIndex = currentTimeAsString.LastIndexOf(':');
+            string time = currentTimeAsString.Substring(0, endTimeIndex);
+            pubnub.Publish(channelModel.Name, channelModel.Message + " - " + time);
 
             return responseMsg;
         }
@@ -87,6 +90,7 @@ namespace JustRunnerChat.Controllers
             return responseMsg;
         }
 
+        [System.Web.Mvc.OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         [HttpGet]
         [ActionName("get-channels")]
         public HttpResponseMessage GetChannels()
