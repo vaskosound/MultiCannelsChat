@@ -105,6 +105,19 @@ namespace JustRunnerChat.Controllers
         }
 
         [HttpGet]
+        [ActionName("get-channel")]
+        public HttpResponseMessage GetChannelByName(string channelName)
+        {
+            var responseMsg = this.PerformOperation(() =>
+            {
+                var channel = ChannelsRepository.GetChannelByName(channelName);
+                return channel;
+            });
+
+            return responseMsg;
+        }
+
+        [HttpGet]
         [ActionName("get-users")]
         public HttpResponseMessage GetUsers(string channelName)
         {

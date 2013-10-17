@@ -488,9 +488,14 @@ td button {
     margin: 20px 0 10px 0;
 }
 
-.error {
+.error, #chat-errors {
     color: #e80c4d;
 }
+
+#login-reg-errors {
+    font-size: 1.5em;
+    color: #e80c4d;
+} 
 
 /* styles for validation helpers */
 .field-validation-error {
@@ -1117,6 +1122,15 @@ input[type="checkbox"].input-validation-error {
     top: 60px;
     left: 22px;
 }
+
+#get_history {
+    cursor: pointer;
+    outline: 0;
+    position: absolute;
+    top: 630px;
+    left: 30px;
+}
+
 
 .ui-widget-content {
     border: none;

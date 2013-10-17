@@ -82,7 +82,6 @@ Chat.controller = (function () {
                     .then(function () {
                         self.loadChat(self.selector);
                     }, function (err) {
-                        console.log(err);
                         $("#login-reg-errors").html(err.responseJSON.Message);
                     });
                 return false;
@@ -96,6 +95,9 @@ Chat.controller = (function () {
                         $("#go-register").parent().removeAttr("style");
                         $("#go-login").parent().removeAttr("style");
                         $("#menu").children().first().remove();
+                    }, function (err) {
+                        $("#chat-errors").html(err.responseJSON.Message);
+                        $("#errors-dialog").dialog();
                     });
 
                 return false;
@@ -104,6 +106,9 @@ Chat.controller = (function () {
             // create chat
             var count = 0;
             wrapper.on("click", "#add_tab", function () {
+                $("#dialog").dialog("open");
+                $("#ui-id-1").text("Create channel");
+                $("#tab_title").attr('readonly', false);
                 var addButton = $(".ui-dialog-buttonset").children().first();
                 addButton.attr("id", "addButton");
                 count++;
@@ -111,11 +116,17 @@ Chat.controller = (function () {
                     wrapper.on("click", "#addButton", function (parameters) {
                         var name = $("#tab_title").val();
                         var pass = $("#tab_content").val();
-                        self.persister.channels.create(name, pass).then(function (data) {
-                            self.addTab(name);
-                            var containerId = self.findChatBoxId();
-                            self.loadChatBox(name, containerId);
-                        });
+                        self.persister.channels.create(name, pass)
+                            .then(function (data) {
+                                self.addTab(name);
+                                var containerId = self.findChatBoxId();
+                                self.loadChatBox(name, containerId);
+                                $("#tab_title").val("");
+                                $("#tab_content").val("");
+                            }, function (err) {
+                                $("#chat-errors").html(err.responseJSON.Message);
+                                $("#errors-dialog").dialog();
+                            });
 
                         return false;
                     });
@@ -124,17 +135,58 @@ Chat.controller = (function () {
             });
 
             // join chat
+            var countJoin = 0;
             wrapper.on("click", "#update-area li a", function (parameters) {
                 var name = $(this).text();
-                self.persister.channels.join(name, "")
+                self.persister.channels.getChannel(name)
                     .then(function (data) {
-                        self.addTab(name);
-                        var containerId = self.findChatBoxId();
-                        self.loadChatBox(name, containerId);
+                        if (!data.hasPassword) {
+                            self.persister.channels.join(name, "")
+                                .then(function (data) {
+                                    self.addTab(name);
+                                    var containerId = self.findChatBoxId();
+                                    self.loadChatBox(name, containerId);
+                                }, function (err) {
+                                    $("#chat-errors").html(err.responseJSON.Message);
+                                    $("#errors-dialog").dialog();
+                                });
+                        }
+                        else {
+                            $("#dialog").dialog("open");
+                            $("#ui-id-1").text("Add password");
+                            $("#tab_title").val(name);
+                            $("#tab_title").attr('readonly', true);
+                            var joinButton = $(".ui-dialog-buttonset").children().first();
+                            joinButton.attr("id", "joinButton");
+                            countJoin++;                            
+                            if (countJoin == 1) {
+                                wrapper.on("click", "#joinButton", function (parameters) {
+                                    var name = $("#tab_title").val();
+                                    var pass = $("#tab_content").val();
+                                    self.persister.channels.join(name, pass)
+                                        .then(function (data) {
+                                            self.addTab(name);
+                                            var containerId = self.findChatBoxId();
+                                            self.loadChatBox(name, containerId);
+                                            $("#tab_title").val("");
+                                            $("#tab_content").val("");
+                                        }, function (err) {
+                                            $("#chat-errors").html(err.responseJSON.Message);
+                                            $("#errors-dialog").dialog();
+                                        });
+
+                                    return false;
+                                });
+                            }
+                        }                        
+                    }, function (err) {
+                        $("#chat-errors").html(err.responseJSON.Message);
+                        $("#errors-dialog").dialog();
                     });
 
+                return false;
             });
-
+                       
             // load users in chatroom
             wrapper.on("click", "#tabs li a", function (ev) {
                 $("#tabs li").attr("channel-selected", false);
@@ -148,22 +200,60 @@ Chat.controller = (function () {
                             users += '<li>' + data[i].nickname + '</li>';
                         }
                         $("#list-of-people").html(users);
+                    }, function (err) {
+                        $("#chat-errors").html(err.responseJSON.Message);
+                        $("#errors-dialog").dialog();
                     });
+                return false;
+            });
+
+            // get channel history
+            wrapper.on("click", "#get_history", function (ev) {
+                var channelName = self.findChannelName();
+                self.persister.channels.getHistory(channelName)
+                    .then(function (data) {
+                       // var chatBox = $()
+                        var boxId = self.findChatBoxId();
+                        var fullDate = data[0].dateTime;
+                        var index = fullDate.indexOf('T');
+                        var date = fullDate.substring(0, index);
+                        var history = "<strong>From " +  date + "</strong><br />";
+                        for (var i = 0; i < data.length; i++) {
+                            fullDate = data[i].dateTime;
+                            var curIndex = fullDate.indexOf('T');
+                            var curDate = fullDate.substring(0, curIndex);
+                            if (curDate !== date) {
+                                history += "<strong>From " + curDate + "</strong><br />";
+                            }
+                            date = curDate;
+                            lastIndex = fullDate.lastIndexOf(":");
+                            history += data[i].author + ": " + data[i].content + " - " +
+                                fullDate.substring(curIndex + 1, lastIndex) + "<br />";
+                        }
+                        $("#" + boxId).html(history);
+                    }, function (err) {
+                        $("#chat-errors").html(err.responseJSON.Message);
+                        $("#errors-dialog").dialog();
+                    });
+                return false;
             });
 
             // send message
             wrapper.on("click", "#chat-button", function () {
                 var message = $("#chat-input").val();
                 if (message != null && message != "") {
-                    var boxes = $("#tabs ul li");
-                    var channelName;
-                    for (var i = 0; i < boxes.length; i++) {
-                        if (boxes[i].getAttribute("channel-selected") == "true") {
-                            channelName = boxes[i].children[0].innerHTML;
-                        }
-                    }
+                    var channelName = self.findChannelName();
+                    var boxId = self.findChatBoxId();
+                    var oldscrollHeight = $("#" + boxId)[0].scrollHeight;
                     self.persister.channels.sendMessage(channelName, self.persister.getNickname() + ": " + message).then(function () {
+                        var newscrollHeight = $("#" + boxId)[0].scrollHeight;
+                        if (newscrollHeight > oldscrollHeight) {
+                            $("#" + boxId).scrollTop($("#" + boxId)[0].scrollHeight);
+                        }
                         $("#chat-input").val("");
+                    }, function (err) {
+                        $("#chat-errors").html(err.responseJSON.Message);
+                        $("#errors-dialog").dialog();
                     });
 
                     return false;
@@ -175,16 +265,19 @@ Chat.controller = (function () {
                 if ((e.keyCode || e.charCode) === 13) {
                     var message = $("#chat-input").val();
                     if (message != null && message != "") {
-                        var boxes = $("#tabs ul li");
-                        var channelName;
-                        for (var i = 0; i < boxes.length; i++) {
-                            if (boxes[i].getAttribute("channel-selected") == "true") {
-                                channelName = boxes[i].children[0].innerHTML;
-                            }
-                        }
+                        var channelName = self.findChannelName();
+                        var boxId = self.findChatBoxId();
+                        var oldscrollHeight = $("#" + boxId)[0].scrollHeight;
                         self.persister.channels.sendMessage(channelName, self.persister.getNickname() + ": " + message)
                         .then(function () {
+                            var newscrollHeight = $("#" + boxId)[0].scrollHeight;
+                            if (newscrollHeight > oldscrollHeight) {
+                                $("#" + boxId).scrollTop($("#" + boxId)[0].scrollHeight);
+                            }                           
                             $("#chat-input").val("");
+                        }, function (err) {
+                            $("#chat-errors").html(err.responseJSON.Message);
+                            $("#errors-dialog").dialog();
                         });
                         return false;
                     }
@@ -201,6 +294,9 @@ Chat.controller = (function () {
                 self.persister.channels.exitChannel(name)
                     .then(function (data) {
                         self.unloadChatBox(name);
+                    }, function (err) {
+                        $("#chat-errors").html(err.responseJSON.Message);
+                        $("#errors-dialog").dialog();
                     });
                 return false;
             });
@@ -281,6 +377,17 @@ Chat.controller = (function () {
             pubnub.unsubscribe({
                 channel: channelName
             });
+        },
+
+        findChannelName: function(){
+            var boxes = $("#tabs ul li");
+            var channelName;
+            for (var i = 0; i < boxes.length; i++) {
+                if (boxes[i].getAttribute("channel-selected") == "true") {
+                    channelName = boxes[i].children[0].innerHTML;
+                }
+            }
+            return channelName;
         },
 
         findChatBoxId: function () {

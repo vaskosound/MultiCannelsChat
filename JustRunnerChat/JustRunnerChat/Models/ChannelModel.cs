@@ -34,6 +34,17 @@ namespace JustRunnerChat.Models
     }
 
     [DataContract]
+    public class ChannelHasPasswordModel
+    {
+        [DataMember(Name = "name")]
+        public string Name { get; set; }
+
+        [DataMember(Name = "hasPassword")]
+        public bool HasPassword { get; set; }
+    }
+
+
+    [DataContract]
     public class ChannelExitModel
     {
         [DataMember(Name = "name")]

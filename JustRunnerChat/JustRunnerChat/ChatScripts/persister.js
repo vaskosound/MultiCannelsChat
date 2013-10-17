@@ -137,6 +137,18 @@ Chat.persisters = (function () {
 
             return Requester.get(url);
         },
+
+        getChannel: function (channelName) {
+            var url = this.serviceUrl + "get-channel?channelName=" + channelName;
+
+            return Requester.get(url);
+        },
+
+        getHistory: function (channelName) {
+            var url = this.serviceUrl + "get-history?channelName=" + channelName;
+
+            return Requester.get(url);
+        },
         
         getUsers: function (channelName) {
             var url = this.serviceUrl + "get-users?channelName=" + channelName;

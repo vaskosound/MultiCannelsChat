@@ -19,7 +19,7 @@ namespace JustRunnerChat.Repositories
         {
             if (channelName == null || channelName.Length < MinNameChars || channelName.Length > MaxNameChars)
             {
-                throw new ServerErrorException("Username should be between 4 and 30 symbols long", "INV_CHNAME_LEN");
+                throw new ServerErrorException("Channel name should be between 4 and 30 symbols long", "INV_CHNAME_LEN");
             }
             else if (channelName.Any(ch => !ValidNameChars.Contains(ch)))
             {
@@ -165,7 +165,7 @@ namespace JustRunnerChat.Repositories
 
                 var history = dbChannel.History.OrderBy(x => x.DateTime).ToList();
 
-                var historyModel = history.Select(new Func<Message, MessageModel>(x => new MessageModel()
+                var historyModel = history.OrderBy(x => x.DateTime).Select(new Func<Message, MessageModel>(x => new MessageModel()
                 {
                     Author = x.Author,
                     Content = x.Content,
@@ -175,6 +175,22 @@ namespace JustRunnerChat.Repositories
                 })).ToList();
 
                 return historyModel;
+            }
+        }
+
+
+        public static ChannelHasPasswordModel GetChannelByName(string name)
+        {
+            using (ChatContext context = new ChatContext())
+            {
+                var channel = context.Channels.FirstOrDefault(c => c.Name.ToLower() == name.ToLower());
+                var chanelHasPassword = new ChannelHasPasswordModel()
+                {
+                    Name = channel.Name,
+                    HasPassword = !String.IsNullOrEmpty(channel.Password)
+                };
+
+                return chanelHasPassword;
             }
         }
 

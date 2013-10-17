@@ -12,7 +12,7 @@ namespace JustRunnerChat.Models
         [DataMember(Name = "author")]
         public string Author { get; set; }
 
-        [DataMember(Name = "Content")]
+        [DataMember(Name = "content")]
         public string Content { get; set; }
 
         [DataMember(Name = "dateTime")]
